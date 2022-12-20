@@ -1,2 +1,3 @@
 my-db/mysql.sock
 my-db/*
+airflow-data/logs/*
