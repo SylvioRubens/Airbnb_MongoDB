@@ -1,25 +1,11 @@
 import mysql.connector
 from mysql.connector import Error
+import sqlalchemy as db
 import pandas as pd
 import json
 
 trusted_tbl = "airbnb_trusted"
 refined_tbl = "airbnb_refined"
-
-def connect():
-    """ Connect to MySQL database """
-    conn = None
-    try:
-        conn = mysql.connector.connect(host='host.docker.internal',
-                                        database='airbnb',
-                                        user='puc',
-                                        password='root',
-                                        port=3309)
-        if conn.is_connected():
-            print('Connected to MySQL database')
-
-    except:
-        raise
 
 def read_json():
 
@@ -32,34 +18,37 @@ def read_json():
 
 def connect_db():
     """ Connect to MySQL database """
-    conn = None
-    try:
-        conn = mysql.connector.connect(host='host.docker.internal',
-                                        database='airbnb',
-                                        user='puc',
-                                        password='root',
-                                        port=3309)
-        if conn.is_connected():
-            print('Connected to MySQL database')
-            cursor = conn.cursor()
+    my_conn = None
 
-    except Error as e:
-        print(e)
+    config = {'host': 'host.docker.internal',
+                'port': 3309,
+                'user': 'puc',
+                'password': 'root',
+                'database': 'airbnb'}
+
+    db_user = config.get('user')
+    db_pwd = config.get('password')
+    db_host = config.get('host')
+    db_port = config.get('port')
+    db_name = config.get('database')
+
+    # specify connection string
+    connection_str = f'mysql+pymysql://{db_user}:{db_pwd}@{db_host}:{db_port}/{db_name}'
+
+    my_conn = db.create_engine(connection_str)
     
-    return cursor, conn
-
-def check_table(conn, dataframe):
-    # dataframe.to_sql(conn, dataframe)
-    pass
+    return my_conn
 
 def populate_airbnb_trusted():
     data = read_json()
     print("shape of data after normalization: " + str(data.shape))
 
     # Connect to airbnb database
-    cursor, conn = connect_db()
+    conn = connect_db()
 
-    check_table(conn, data)
+    data.to_sql(name=trusted_tbl, con=conn, if_exists='replace', index=False)
+
+    print("Tabela criada")
 
     # sql = '''
     #     select colunas from trusted
