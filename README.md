@@ -6,3 +6,8 @@ A atividade proposta por nós, alunos, é consumir a base Sample_airbnb disponí
 
 Toda a arquitetura será feita em containers dockers, construídos pelo docker-compose.yml, a orquestração dos pipelines será feita pela imagem docker do airflow e disponibilizadas em um container do mysql. A informação publicada na tabela trusted, será consumida por um dashboard PowerBI.
 
+Para rodar o programa que sobe todos os containers:
+
+* Deve-se rodar o arquivo "run_application.bat". Esse arquivo é o responsável por subir todos os containers (airflow e mysql database), e cria uma rede chamada mysql, onde ela é a rede usada para comunicação entre os containers.
+* O arquivo run_application irá subir os containers, criar a rede mysql e após isso, irá rodar o "creating_network.ps1", que é um arquivo de execução do powershell, que irá alocar os containers existentes do airflow e mysql na rede.
+* Após isso, a execução deve ser feita pela interface web do airflow.
