@@ -1,5 +1,7 @@
 .git
 .env
 airflow_settings.yaml
-.astro
+.astro/
 my-db
+include/__pycache__/
+include/__pycache__/*.cpython-39.pyc
