@@ -46,9 +46,15 @@ def populate_airbnb_trusted():
     # Connect to airbnb database
     conn = connect_db()
 
-    data.to_sql(name=trusted_tbl, con=conn, if_exists='replace', index=False)
+    data = data.astype(str) 
 
-    print("Tabela criada")
+    print(data['reviews'].head())
+
+    if data.to_sql(name=trusted_tbl, con=conn, if_exists='replace', index=False):
+
+        print("Tabela criada")
+    
+    else: raise
 
     # sql = '''
     #     select colunas from trusted
