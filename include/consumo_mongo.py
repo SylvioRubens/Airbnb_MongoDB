@@ -1,4 +1,3 @@
-####### Primeira dag: Dag de Consumo
 import pymongo
 from bson.json_util import dumps
 
@@ -21,12 +20,11 @@ def consumo_mongo():
     cursor = collection.find()
 
     # Transformando o cursor em uma lista de dicionarios
-
     list_cur = list(cursor)
+
     # Convertendo para uma estrutura Json
-
     json_data = dumps(list_cur)
-    # Escrevendo os dados em um arquivo Json
 
+    # Escrevendo os dados em um arquivo Json
     with open('data.json', 'w') as file:
         file.write(json_data)
