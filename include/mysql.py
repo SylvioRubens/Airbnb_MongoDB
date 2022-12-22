@@ -159,7 +159,7 @@ def populate_airbnb_refined():
                                         `airbnb_trusted`.name																					AS `name`
                                     ,	`airbnb_trusted`.`price.$numberDecimal`																	AS `price`
                                     ,	SUBSTRING_INDEX(`airbnb_trusted`.`address.street`, ',', 1) 												AS `city`
-                                    ,	REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(`airbnb_trusted`.`address.street`, ' ', 2),' ', -1), ',', '') 	AS `state`
+                                    ,	SUBSTRING_INDEX(SUBSTRING_INDEX(`airbnb_trusted`.`address.street`, ',', 2), ',', -1) 	                AS `state`
                                     ,	`airbnb_trusted`.`address.country`																		AS 	`country`
                                     ,	`airbnb_trusted`.`address.market`																		AS `market`
                                     ,	`airbnb_trusted`.`review_scores.review_scores_rating`													AS `rating`
